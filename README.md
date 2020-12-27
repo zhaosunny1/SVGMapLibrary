@@ -1,14 +1,27 @@
 ### Android 使用SVG 地图
   用于加载SVG地图，可以控制显示地图上面每个区域的颜色，可以点击。
 
+### 效果图如下
+![screen](https://github.com/zhaosunny1/SVGMapLibrary/blob/master/screen/map.png)
+
+
 ### 如何使用
 
-> 0. build.gradle中配置引入
+>  build.gradle中配置引入
 ```groovy
-
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	
+	dependencies {
+	        implementation 'com.github.zhaosunny1:SVGMapLibrary:0.1-alpha'
+	}
 ```
 
-> 1. XML中配置
+>  XML中配置
 ```XML
 <cn.zhaosunny.svgmaplibrary.SvgMapView
         android:id="@+id/mapview"
@@ -19,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 ```
-> 2. Activity中使用
+>  Activity中使用
 ``` java
 new Thread(new Runnable() {
             @Override
