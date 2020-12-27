@@ -1,4 +1,7 @@
 ### Android 使用SVG 地图
+[The MIT License (MIT)](http://opensource.org/licenses/MIT)
+[![](https://jitpack.io/v/zhaosunny1/SVGMapLibrary.svg)](https://jitpack.io/#zhaosunny1/SVGMapLibrary)
+
   用于加载SVG地图，可以控制显示地图上面每个区域的颜色，可以点击。
 
 ### 效果图如下
