@@ -1,14 +1,14 @@
-package com.huruwo.mapview.mapview;
+package cn.zhaosunny.svgmaplibrary;
 
 import android.graphics.Path;
 
 
 /**
- * @author: 蜗牛
- * @date: 2017/6/1 10:13
+ * @author: zhaoSunny
+ * @date: 2020年12月27日
  * @desc:
  */
-public class PathItem {
+public class SvgPathBean {
     public Path getPath() {
         return path;
     }
@@ -85,8 +85,8 @@ public class PathItem {
     private int state;
 
 
-    public PathItem(String xmlvalue, boolean isSelect, String title,
-                    int type, String color, int state, long mapid) {
+    public SvgPathBean(String xmlvalue, boolean isSelect, String title,
+                       int type, String color, int state, long mapid) {
         this.xmlvalue = xmlvalue;
         this.isSelect = isSelect;
         this.title = title;
@@ -95,7 +95,7 @@ public class PathItem {
         this.state = state;
     }
 
-    public PathItem() {
+    public SvgPathBean() {
     }
 
 

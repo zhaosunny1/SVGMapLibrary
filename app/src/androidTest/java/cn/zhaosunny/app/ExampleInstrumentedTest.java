@@ -1,4 +1,4 @@
-package cn.zhaosunny.svgmaplibrary;
+package cn.zhaosunny.app;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("cn.zhaosunny.svgmaplibrary.test", appContext.getPackageName());
+        assertEquals("cn.zhaosunny.app", appContext.getPackageName());
     }
 }

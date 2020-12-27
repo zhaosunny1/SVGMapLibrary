@@ -1,4 +1,4 @@
-package com.huruwo.mapview.mapview;
+package cn.zhaosunny.svgmaplibrary;
 
 import android.graphics.Path;
 import android.util.Log;

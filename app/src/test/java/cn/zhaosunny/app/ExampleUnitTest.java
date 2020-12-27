@@ -1,4 +1,4 @@
-package cn.zhaosunny.svgmaplibrary;
+package cn.zhaosunny.app;
 
 import org.junit.Test;
 

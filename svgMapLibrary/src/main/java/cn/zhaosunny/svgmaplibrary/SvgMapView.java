@@ -1,4 +1,4 @@
-package com.huruwo.mapview.mapview;
+package cn.zhaosunny.svgmaplibrary;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +11,6 @@ import android.graphics.RectF;
 import android.graphics.Region;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RawRes;
 
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -25,16 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author: liuwan
- * @date: 2018-01-29
+ * @author: zhaoSunny
+ * @date: 2020-12-27
  * @action:
  */
-public class MapView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class SvgMapView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
-    private String TAG = "ZTEMapView";
     private Context context;
     private Paint paintMap, paintText, paintPoint, paintBoder;
-    private List<PathItem> pathItems = new ArrayList<>();
+    private List<SvgPathBean> pathItems = new ArrayList<>();
     private int widthSize = 0;
     private int heightSize = 0;
     private float scale = 1.0f;
@@ -50,12 +48,12 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
     private GestureDetector mDetector;
     private List<float[]> points = new ArrayList<>();
 
-    public MapView(Context context) {
+    public SvgMapView(Context context) {
 
         this(context, null);
     }
 
-    public MapView(Context context, @Nullable AttributeSet attrs) {
+    public SvgMapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         init(context);
@@ -104,18 +102,18 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
      *
      * @param mapBean
      */
-    public void loadPathItemAndScale(MapBean mapBean) {
+    public void loadPathItemAndScale(SvgMapBean mapBean) {
         setScacle(getMinScale());
         pathItems = mapBean.pathItems;
-        map_w = mapBean.map_w;
-        map_h = mapBean.map_h;
+        map_w = mapBean.svgMapWidth;
+        map_h = mapBean.svgMapHeight;
         requestLayout();
         invalidate();
     }
 
 
     public interface OnPathClickListener {
-        void onPathClick(PathItem p);
+        void onPathClick(SvgPathBean p);
     }
 
     public interface OnPathDrawListener {
@@ -180,14 +178,14 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
         //中心缩放 记得后面两个参数 为中点
         canvas.scale(scale, scale, 0, 0);
 
-        for (PathItem pathItem : pathItems) {
+        for (SvgPathBean pathItem : pathItems) {
             pathItemDraw(canvas, pathItem);
         }
         /**
          * 文字绘制
          */
         points.clear();
-        for (PathItem pathItem : pathItems) {
+        for (SvgPathBean pathItem : pathItems) {
             pathCenterText(canvas, pathItem);
             pathBoder(canvas, pathItem);
         }
@@ -215,7 +213,7 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
     }
 
 
-    public void pathItemDraw(final Canvas canvas, PathItem pathItem) {
+    public void pathItemDraw(final Canvas canvas, SvgPathBean pathItem) {
         if (pathItem.getIsSelect()) {
             //首先绘制选中的背景阴影
             paintMap.clearShadowLayer();
@@ -236,7 +234,7 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
 
     }
 
-    public void pathCenterText(Canvas canvas, PathItem pathItem) {
+    public void pathCenterText(Canvas canvas, SvgPathBean pathItem) {
         if(TextUtils.isEmpty(pathItem.getTitle())){
             return;
         }
@@ -273,13 +271,13 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
 
     }
 
-    public void pathBoder(Canvas canvas, PathItem pathItem) {
+    public void pathBoder(Canvas canvas, SvgPathBean pathItem) {
 
         canvas.drawPath(pathItem.getPath(), paintBoder);
     }
 
 
-    public void setOnZteClickListener(final OnPathClickListener onPathClickListener) {
+    public void setOnAreaClickListener(final OnPathClickListener onPathClickListener) {
         this.onPathClickListener = onPathClickListener;
     }
 
@@ -296,7 +294,7 @@ public class MapView extends View implements GestureDetector.OnGestureListener, 
         Log.e("触摸点击", "onSingleTapConfirmed" + motionEvent.getY() + "---" + motionEvent.getY());
         float x = (motionEvent.getX() - has_move_x) / scale;
         float y = (motionEvent.getY() - has_move_y) / scale;
-        for (PathItem pathItem : pathItems) {
+        for (SvgPathBean pathItem : pathItems) {
 
             if (MapViewIsTouch((int) x, (int) y, pathItem.getPath())) {
                 if (onPathClickListener != null) {

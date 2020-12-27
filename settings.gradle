@@ -1,2 +1,2 @@
-include ':svgMapLibrary'
 include ':app'
+include ':svgMapLibrary'

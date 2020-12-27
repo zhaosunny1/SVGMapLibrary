@@ -1,4 +1,4 @@
-package com.huruwo.mapview.mapview;
+package cn.zhaosunny.svgmaplibrary;
 
 import android.content.Context;
 import android.util.Log;
@@ -17,11 +17,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * @author: liuwan
- * @date: 2018-02-01
+ * @author: zhaoSunny
+ * @date: 2020年12月27日
  * @action:
  */
-public class XmlUtil {
+public class VectorXmlUtil {
 
     public static int MAP_TYPE_CITY = 0;
     public static int MAP_TYPE_POINT = 1;
@@ -38,11 +38,11 @@ public class XmlUtil {
      * @return
      * @author zhaosunny
      */
-    public static MapBean getXmlValue(Context context, @RawRes final int raw_res, String map_name) {
+    public static SvgMapBean getXmlValue(Context context, @RawRes final int raw_res, String map_name) {
 
-        MapBean mapBean = null;
+        SvgMapBean mapBean = null;
 
-        List<PathItem> pathlists = new ArrayList<>();
+        List<SvgPathBean> pathlists = new ArrayList<>();
 
         try {
             // DocumentBuilder对象
@@ -69,7 +69,7 @@ public class XmlUtil {
             NodeList paths = doc.getElementsByTagName("path");
 
 
-            mapBean = new MapBean(map_name, map_w, map_h);
+            mapBean = new SvgMapBean(map_name, map_w, map_h);
 
             for (int i = 0; i < paths.getLength(); i++) {
                 // 取出每一个元素
@@ -82,7 +82,7 @@ public class XmlUtil {
                     nameValue = node.getAttribute("android:name");
                 }
                 //String nameValue = "地点：" + i;
-                PathItem item = new PathItem( pathValue, false, nameValue,
+                SvgPathBean item = new SvgPathBean(pathValue, false, nameValue,
                         MAP_TYPE_CITY,
                         colorValue, STATE_WELL, 0);
                 item.setPath(PathParser.createPathFromPathData(pathValue));
