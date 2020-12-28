@@ -65,6 +65,13 @@ public class SvgPathBean {
         this.color = color;
     }
 
+    public void setSelectedColor(String selectedColor) {
+        this.selectedColor = selectedColor;
+    }
+
+    public String getSelectedColor() {
+        return selectedColor;
+    }
 
     public int getState() {
         return this.state;
@@ -81,7 +88,7 @@ public class SvgPathBean {
     private boolean isSelect;
     private String title;
     private int type;
-    private String color;
+    private String color, selectedColor;
     private int state;
 
 

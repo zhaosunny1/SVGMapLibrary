@@ -13,6 +13,7 @@ import android.graphics.Region;
 import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
+import android.text.style.LineHeightSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -32,7 +33,7 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
 
     private Context context;
     private Paint paintMap, paintText, paintPoint, paintBoder;
-    private List<SvgPathBean> pathItems = new ArrayList<>();
+    public List<SvgPathBean> pathItems = new ArrayList<>();
     private int widthSize = 0;
     private int heightSize = 0;
     private float scale = 1.0f;
@@ -47,6 +48,15 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
     //手势监听器
     private GestureDetector mDetector;
     private List<float[]> points = new ArrayList<>();
+    private String selectedColor = "#FFFFFF";
+
+    public void setSelectedColor(String selectedColor) {
+        this.selectedColor = selectedColor;
+    }
+
+    public String getSelectedColor() {
+        return selectedColor;
+    }
 
     public SvgMapView(Context context) {
 
@@ -77,7 +87,7 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
         paintText.setAntiAlias(true);
         paintText.setStyle(Paint.Style.FILL);
         paintText.setStrokeWidth(5);
-        paintText.setTextSize(20);
+        paintText.setTextSize(24);
         paintText.setColor(Color.BLUE);
 
         paintPoint = new Paint();
@@ -97,16 +107,27 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
 
     }
 
+    public void setTextColor(String textColor) {
+        paintText.setColor(Color.parseColor(textColor));
+    }
+
     /**
      * 加载地图
      *
      * @param mapBean
      */
-    public void loadPathItemAndScale(SvgMapBean mapBean) {
-        setScacle(getMinScale());
+    public void loadPathItem(SvgMapBean mapBean) {
         pathItems = mapBean.pathItems;
         map_w = mapBean.svgMapWidth;
         map_h = mapBean.svgMapHeight;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 刷新数据
+     */
+    public void notifyDataSetChanged() {
+        setScacle(getMinScale());
         requestLayout();
         invalidate();
     }
@@ -213,7 +234,7 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
     }
 
 
-    public void pathItemDraw(final Canvas canvas, SvgPathBean pathItem) {
+    protected void pathItemDraw(final Canvas canvas, SvgPathBean pathItem) {
         if (pathItem.getIsSelect()) {
             //首先绘制选中的背景阴影
             paintMap.clearShadowLayer();
@@ -221,7 +242,11 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
             canvas.drawPath(pathItem.getPath(), paintMap);
             //绘制具体显示的
             paintMap.clearShadowLayer();
-            paintMap.setColor(Color.WHITE);
+            if (!TextUtils.isEmpty(pathItem.getSelectedColor())) {
+                paintMap.setColor(Color.parseColor(pathItem.getSelectedColor()));
+            } else {
+                paintMap.setColor(Color.parseColor(selectedColor));
+            }
             canvas.drawPath(pathItem.getPath(), paintMap);
 
         } else {
@@ -234,8 +259,8 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
 
     }
 
-    public void pathCenterText(Canvas canvas, SvgPathBean pathItem) {
-        if(TextUtils.isEmpty(pathItem.getTitle())){
+    protected void pathCenterText(Canvas canvas, SvgPathBean pathItem) {
+        if (TextUtils.isEmpty(pathItem.getTitle())) {
             return;
         }
         PathMeasure measure = new PathMeasure(pathItem.getPath(), false);
@@ -271,7 +296,7 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
 
     }
 
-    public void pathBoder(Canvas canvas, SvgPathBean pathItem) {
+    protected void pathBoder(Canvas canvas, SvgPathBean pathItem) {
 
         canvas.drawPath(pathItem.getPath(), paintBoder);
     }
@@ -281,7 +306,7 @@ public class SvgMapView extends View implements GestureDetector.OnGestureListene
         this.onPathClickListener = onPathClickListener;
     }
 
-    public void setOnPathDrawListener(OnPathDrawListener onPathDrawListener) {
+    protected void setOnPathDrawListener(OnPathDrawListener onPathDrawListener) {
         this.onPathDrawListener = onPathDrawListener;
     }
 

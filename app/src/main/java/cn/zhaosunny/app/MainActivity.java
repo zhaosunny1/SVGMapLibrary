@@ -3,6 +3,7 @@ package cn.zhaosunny.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import cn.zhaosunny.svgmaplibrary.SvgMapBean;
@@ -11,11 +12,12 @@ import cn.zhaosunny.svgmaplibrary.SvgPathBean;
 import cn.zhaosunny.svgmaplibrary.VectorXmlUtil;
 
 /**
- * @author  zhaosunny on 2020/12/27
+ * @author zhaosunny on 2020/12/27
  */
 public class MainActivity extends AppCompatActivity {
 
     private SvgMapView mapview;
+    private SvgMapBean svgMapBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +39,28 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 final SvgMapBean mapBean = VectorXmlUtil
                         .getXmlValue(MainActivity.this,
-                        R.raw.changezhou_maps, "常州市地图");
+                                R.raw.changezhou_maps, "常州市地图");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mapview.loadPathItemAndScale(mapBean);
+                        svgMapBean = mapBean;
+                        mapview.loadPathItem(mapBean);
                     }
                 });
 
 
             }
         }).start();
+        View colorButton = findViewById(R.id.btn_changecolor);
+        colorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mapview.pathItems != null && mapview.pathItems.size() > 0) {
+                    mapview.setTextColor("#ff00ff");
+                    mapview.pathItems.get(0).setColor("#00ff00");
+                    mapview.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
