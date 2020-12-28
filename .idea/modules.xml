@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MapView-master.iml" filepath="$PROJECT_DIR$/.idea/modules/MapView-master.iml" group="MapView-master" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="MapView-master/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/svgMapLibrary/svgMapLibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/svgMapLibrary/svgMapLibrary.iml" group="MapView-master/svgMapLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SVGMapLibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/SVGMapLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SVGMapLibrary.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SVGMapLibrary.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/svgMapLibrary/SVGMapLibrary.svgMapLibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/svgMapLibrary/SVGMapLibrary.svgMapLibrary.iml" />
     </modules>
   </component>
 </project>
