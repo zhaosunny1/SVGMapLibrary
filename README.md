@@ -48,7 +48,7 @@ new Thread(new Runnable() {
        runOnUiThread(new Runnable() {
            @Override
            public void run() {
-               mapview.loadPathItemAndScale(mapBean);
+               mapview.loadPathItem(mapBean);
            }
        });
                 
